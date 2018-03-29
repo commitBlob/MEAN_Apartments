@@ -345,6 +345,18 @@ router.get('/activitybanner/:activity', (req, res, next) => {
     });
 });
 
+/* api/words endpoint returns croatian words */
+router.get('/words/', (req, res, next) => {
+    MongoClient.connect(url, (err, db) => {
+        if (err) throw err;
+        db.collection("cro_words").find({}).toArray( (err, result) => {
+            if (err) throw err;
+            res.json(result);
+            db.close();
+        });
+    });
+});
+
 router.get('/courselist', (req, res, next) => {
     var fileName = 'course-list.xml';
     fs.stat(fileName, (err, stat) => {
